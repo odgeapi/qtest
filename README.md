@@ -1,2 +1,2 @@
 # qtest
-quick test
+quick test!
