@@ -1,2 +1,2 @@
 # qtest
-WTF, take 2
+Learn git v2
