@@ -1,2 +1,4 @@
 # qtest
-Learn git v2
+This is a test repo to check with automation.  Nothing to see here.
+-steve
+
