@@ -90,3 +90,28 @@ func Panics() []string {
                 return panics
         }
 }
+
+func removeDupes(a []string, b []string) []string {
+        if len(b) == 0 {
+                return nil
+        }
+        if len(a) == 0 {
+                return b
+        }
+
+        c := make([]string, 0) //iefficient but who cares for this
+        for _, v := range b {
+                new := true
+                for _, av := range a {
+                        if v == av {
+                                new = false
+                                break
+                        }
+                }
+                if new {
+                        c = append(c, v)
+                }
+        }
+        return c
+}
+
