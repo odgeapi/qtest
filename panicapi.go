@@ -115,3 +115,33 @@ func removeDupes(a []string, b []string) []string {
         return c
 }
 
+func main() {
+        label := ""
+        if len(os.Args) >= 2 {
+                label = os.Args[1]
+        }
+        if len(os.Args) >= 3 {
+                x, err := strconv.Atoi(os.Args[2])
+                if err == nil {
+                        uppLines = x
+                }
+        }
+
+        cmd := exec.Command("/usr/bin/touch", "log/front.log", "log/demand.log", "log/search.log", "log/crawl.log")
+        cmd.CombinedOutput()
+        last := Panics() // get initial set and dont alert
+        for {
+                new := Panics()
+                if len(new) > 0 {
+                        uniques := removeDupes(last[:], new[:])
+                        //uniques := new // with the new "covered" thing, not needed  think
+                        if len(uniques) > 0 {
+                                time.Sleep(5 * time.Second)
+                                alert(label, uniques)
+                        }
+                        last = new
+                }
+                time.Sleep(60 * time.Second)
+        }
+        fmt.Println(len(last)) // shut it compiler
+}
