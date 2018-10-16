@@ -1,5 +1,8 @@
 package main
 
+// some internal code to look for panics in the log files of the project and email out alerts
+// also checks file system through auxillary script
+
 import (
         "fmt"
         "github.com/mailgun/mailgun-go"
@@ -10,7 +13,7 @@ import (
         "time"
 )
 
-var files []string = []string{"front.log", "demand.log", "search.log", "crawl.log"}
+var files []string = []string{"proc1.log", "proc2.log", "proc3.log", "proc4.log"}
 var covered []int64 = []int64{0, 0, 0, 0}
 var uppLines int = 3
 
@@ -161,7 +164,7 @@ func main() {
                 }
         }
 
-        cmd := exec.Command("/usr/bin/touch", "log/front.log", "log/demand.log", "log/search.log", "log/crawl.log")
+        cmd := exec.Command("/usr/bin/touch", "log/proc1.log", "log/proc2.log", "log/proc3.log", "log/proc4.log")
         cmd.CombinedOutput()
         last := Panics() // get initial set and dont alert
         for {
