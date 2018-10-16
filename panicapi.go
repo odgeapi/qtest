@@ -115,6 +115,40 @@ func removeDupes(a []string, b []string) []string {
         return c
 }
 
+func alert(label string, msg []string) {
+        if msg == nil {
+                return
+        }
+
+        _, err := os.Stat("/usr/sbin/sendmail")
+        if err != nil {
+                fmt.Println("Sending via mailgun as ", err)
+                mg := mailgun.NewMailgun("odge.io", "key-0...",
+                        "pubkey-...")
+                m := mg.NewMessage(
+                        "Alerts <email@example.com>",
+                        "Panic found or process missing on "+label,
+                        strings.Join(msg, "\n"),
+                        "backupemail@example.com",
+                )
+                _, id, err := mg.Send(m)
+                if err != nil {
+                        fmt.Println("Problem sending", id, err)
+                        fmt.Println(strings.Join(msg, "\n"))
+                }
+        } else {
+                fmt.Println("Sending via sendmail")
+                cmd := exec.Command("/usr/sbin/sendmail", "email@example.com")
+                cmd.Stdin = strings.NewReader("Subject: Panic found or process missing on " + label +
+                        "\n\n" + strings.Join(msg, "\n"))
+                _, err := cmd.CombinedOutput()
+                if err != nil {
+                        fmt.Println("Sendmail error", err)
+                }
+        }
+}
+
+
 func main() {
         label := ""
         if len(os.Args) >= 2 {
