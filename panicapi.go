@@ -171,7 +171,6 @@ func main() {
                 new := Panics()
                 if len(new) > 0 {
                         uniques := removeDupes(last[:], new[:])
-                        //uniques := new // with the new "covered" thing, not needed  think
                         if len(uniques) > 0 {
                                 time.Sleep(5 * time.Second)
                                 alert(label, uniques)
