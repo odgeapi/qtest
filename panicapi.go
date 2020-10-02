@@ -1,7 +1,7 @@
 package main
 
-// some internal code to look for panics in the log files of the project and email out alerts
-// also checks file system through auxillary script.
+// Internal code to look for panics in the log files of the project and email out alerts
+// also checks file system through an auxillary script.
 
 import (
         "fmt"
